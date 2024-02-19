@@ -3,6 +3,8 @@ from logging import getLogger
 import json
 from pathlib import Path
 
+
+
 class Devices_Load():
     """
     An object that collects all the functions 

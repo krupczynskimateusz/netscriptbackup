@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from logging import getLogger
+from modules.my_logging import logger_setup
 from modules.config_load import Config_Load
 from modules.devices import Devices_Load, Device
 from modules.connections import SSH_Connection
@@ -8,21 +9,22 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 
-
-CONFIG_LOADED = Config_Load()
+logger_setup()
 
 
 
 class Application():
     """Main application object. Manages the backup process."""
 
+    _CONFIG_LOADED = Config_Load()
+
     def __init__(self) -> None:
         self.logger = getLogger("backup_app.Backup")
         devices_load = Devices_Load()
-        devices_load.load_jsons(CONFIG_LOADED.devices_path)
+        devices_load.load_jsons(Application._CONFIG_LOADED.devices_path)
         devices_load.create_devices()
         self.devices = Device.devices_lst
-        self.configs_path = CONFIG_LOADED.configs_path
+        self.configs_path = Application._CONFIG_LOADED.configs_path
 
 
     def _save_config_to_file(self, ip, name, stdout):

@@ -31,7 +31,7 @@ class Config_Load():
             if valid_path.exists():
                 return valid_path
             else:
-                self.logger.critical(f"Critical: {path} doesn't exist.")
+                self.logger.critical(f"{path} doesn't exist.")
                 exit()
 
         try:
