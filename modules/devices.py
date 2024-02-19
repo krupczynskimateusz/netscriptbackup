@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.10
-import logging
+from logging import getLogger
 import json
 from pathlib import Path
 
@@ -11,7 +11,7 @@ class Devices_Load():
 
 
     def __init__(self) -> None:
-        self.logger = logging.getLogger("backup_app.devices.Devices_Load")
+        self.logger = getLogger("backup_app.devices.Devices_Load")
 
 
     def load_jsons(self, path):
@@ -26,23 +26,15 @@ class Devices_Load():
 
 
         except FileNotFoundError as e:
-            print()
             self.logger.critical(f"{e}")
-            print("#! Exiting...")
             exit()
 
         except json.decoder.JSONDecodeError as e:
-            print()
             self.logger.critical(f"{e}")
-            print("#! Exiting...")
-            print()
             exit()
 
         except Exception as e:
-            print()
             self.logger.critical(f"{e}")
-            print("#! Exiting...")
-            print()
             exit()
 
 
@@ -59,7 +51,6 @@ class Devices_Load():
 
         self.logger.info(f"Creating device objects..")
         devices = self.devices_data
-
         for ip in devices:
             try:
                 _device_parametrs = {
@@ -106,7 +97,6 @@ class Devices_Load():
                 Mikrotik(**_device_parametrs)
 
             elif devices[ip]["vendor"] == "juniper":
-                print(_device_parametrs["mode_password"])
                 Juniper(**_device_parametrs)
 
             else:
@@ -139,7 +129,7 @@ class Device():
             key_file: str,
             passphrase: str
             ) -> None:
-        self.logger = logging.getLogger("backup_app.devices.Device")
+        self.logger = getLogger("backup_app.devices.Device")
         self.name = name
         self.vendor = vendor
         self.ip = ip
@@ -190,7 +180,7 @@ class Cisco(Device):
             key_file,
             passphrase
             )
-        self.logger = logging.getLogger("backup_app.devices.Cisco")
+        self.logger = getLogger("backup_app.devices.Cisco")
         self.logger.debug(f"{self.ip} - Creatad.")
         self.device_type = "cisco_ios"
 
@@ -265,7 +255,7 @@ class Mikrotik(Device):
             key_file,
             passphrase
             )
-        self.logger = logging.getLogger("backup_app.devices.Mikrotik")
+        self.logger = getLogger("backup_app.devices.Mikrotik")
         self.logger.debug(f"{self.ip} - Creatad.")
         self.device_type = "mikrotik_routeros"
 
@@ -324,7 +314,7 @@ class Juniper(Device):
             key_file,
             passphrase
             )
-        self.logger = logging.getLogger("backup_app.devices.Juniper")
+        self.logger = getLogger("backup_app.devices.Juniper")
         self.logger.debug(f"Device {self.ip} creatad.")
         self.device_type = "juniper"
 

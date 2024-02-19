@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import logging
+from logging import getLogger
 from pathlib import Path
 from datetime import datetime
 from subprocess import (
@@ -20,7 +20,7 @@ class Git():
             name,
             configs_path
             ) -> None:
-        self.logger = logging.getLogger("backup_app.git_operations.Git")
+        self.logger = getLogger("backup_app.git_operations.Git")
         self.ip = ip
         self.name = name
         self.dir_path = configs_path / f"{self.name}_{self.ip}"

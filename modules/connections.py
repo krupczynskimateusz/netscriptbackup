@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import logging
+from logging import getLogger
 from subprocess import (
     check_output as subproc_check_outpu,
     CalledProcessError as subproc_CalledProcessError
@@ -18,11 +18,10 @@ class SSH_Connection():
     """An object responsible for SSH connections and their validation."""
 
     def __init__(self, device) -> None:
-        self.logger = logging.getLogger(
+        self.logger = getLogger(
             "backup_app.connections.SSH_Connection"
             )
         self.device = device
-
 
     def get_config(self):
         try:
@@ -30,8 +29,12 @@ class SSH_Connection():
                 f"{self.device.ip} - Checking if the host is responding"
                 )
             ping = ["/usr/bin/ping", "-W", "1", "-c", "4", self.device.ip]
-            subproc_check_outpu(ping).decode()
-            self.logger.debug(f"{self.device.ip} - The host responds")
+            output =subproc_check_outpu(ping).decode()
+            if "not know" in output:
+                self.logger.warrning(
+                    f"{self.device.ip} - {output}")
+            else:
+                self.logger.debug(f"{self.device.ip} - The host responds")
 
         except subproc_CalledProcessError as e:
             self.logger.warning(
