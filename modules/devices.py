@@ -51,7 +51,7 @@ class Devices_Load():
                     )
                 return None
 
-        self.logger.info(f"Creating device objects..")
+        self.logger.critical(f"Creating device objects..")
         devices = self.devices_data
         for ip in devices:
             try:
@@ -104,7 +104,7 @@ class Devices_Load():
             else:
                 self.logger.warning(f"{ip} - Device is not supported.")
                 pass
-
+            
 
 
 class Device():

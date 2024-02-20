@@ -8,6 +8,7 @@ __pycache__/
 
 ## App
 files/log/backup_app.log
+files/files/devices copy.json
 files/backup_test.json
 files/backup_configuration/
 files/log/backup_app.log
