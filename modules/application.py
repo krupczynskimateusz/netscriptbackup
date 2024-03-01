@@ -83,16 +83,28 @@ def _init_system():
     devices_load = Devices_Load()
     devices_load.load_jsons(config_loaded.devices_path)
     devices_load.create_devices()
-    return Application(config_loaded.configs_path)
+    return config_loaded.configs_path
 
 
 def backup_execute():
     """
     The function starts backing up the device configuration.
     """
-    app = _init_system()
+    conf_path = _init_system()
+    app = Application(conf_path)
     app.start_backup()
     return True
+
+
+def encrypt_file():
+    pass
+
+
+def decrypt_file():
+    pass
+
+def show_help():
+    pass
 
 
 if __name__ == "__main__":
